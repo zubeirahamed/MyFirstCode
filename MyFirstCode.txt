@@ -1,6 +1,6 @@
 node{
    stage('SCM Checkout'){
-       git branch: 'main', url: 'https://github.com/webqfunctionhalls/webq-dev-service.git'
+       git branch: 'main', url: 'https://github.com/zubeirahamed/MyFirstCode.git'
    }
    
    stage('SonarQube analysis') {
