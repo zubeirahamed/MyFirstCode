@@ -1,0 +1,58 @@
+node{
+   stage('SCM Checkout'){
+       git branch: 'main', url: 'https://github.com/webqfunctionhalls/webq-dev-service.git'
+   }
+   
+   stage('SonarQube analysis') {
+    def scannerHome = tool 'sonarqube';
+           withSonarQubeEnv("sonarqube") {
+           sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=webq-functionhalls-dev-backend  -Dsonar.host.url=http://3.135.132.199:9000 -Dsonar.login=a1cc101b83a873c219446658ed3f41130a666f95 -Dsonar.sourceEncoding=UTF-8 -Dsonar.sources=src -Dsonar.language=java -Dsonar.java.binaries=bin" 
+ 
+  }
+  }
+  
+  stage('gradle Package'){
+   def gradleHome = tool name: 'gradle', type: 'gradle'
+     def gradleCMD = "${gradleHome}/bin/gradle"
+     sh "${gradleCMD} clean build" 
+   } 
+
+   stage('Creating the Dir'){
+   // sh "ssh ubuntu@13.212.107.10 sudo mkdir /opt/artifacts-$(date +"%d-%m-%Y")"
+      sh "ssh ubuntu@13.212.107.10 sudo mkdir /opt/artifacts-25-03-2023"
+   }
+
+   stage('Creating the Dir'){
+   // sh "ssh ubuntu@13.251.89.195 sudo mkdir /opt/artifacts-$(date +"%d-%m-%Y")"
+      sh "ssh ubuntu@13.251.89.195 sudo mkdir /opt/artifacts-25-03-2023"
+   }
+
+   stage('Creating the Dir'){
+   // sh "ssh ubuntu@13.250.231.80 sudo mkdir /opt/artifacts-$(date +"%d-%m-%Y")"
+      sh "ssh ubuntu@13.250.231.80 sudo mkdir /opt/artifacts-25-03-2023"
+   }
+
+   stage('Creating the Dir'){
+   // sh "ssh ubuntu@13.214.35.48 sudo mkdir /opt/artifacts-$(date +"%d-%m-%Y")"
+      sh "ssh ubuntu@13.214.35.48 sudo mkdir /opt/artifacts-25-03-2023"
+   }
+
+   stage('permissions to the Dir'){
+      sh "ssh ubuntu@13.212.107.10 sudo chmod 777 /opt/"
+      sh "ssh ubuntu@13.212.107.10 sudo chmod 777 /opt/artifacts-25-03-2023"
+   }
+
+   stage('permissions to the Dir'){
+      sh "ssh ubuntu@13.251.89.195 sudo chmod 777 /opt/"
+      sh "ssh ubuntu@13.251.89.195 sudo chmod 777 /opt/artifacts-25-03-2023"
+   }
+
+   stage('permissions to the Dir'){
+      sh "ssh ubuntu@13.250.231.80 sudo chmod 777 /opt/"
+      sh "ssh ubuntu@13.250.231.80 sudo chmod 777 /opt/artifacts-25-03-2023"
+   }
+
+   stage('permissions to the Dir'){
+      sh "ssh ubuntu@13.214.35.48 sudo chmod 777 /opt/"
+      sh "ssh ubuntu@13.214.35.48 sudo chmod 777 /opt/artifacts-25-03-2023"
+   }
